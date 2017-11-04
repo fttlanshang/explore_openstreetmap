@@ -62,7 +62,8 @@ def audit_phone_number(unnormal_phone_numbers, phone):
 def clean_phone_number(phone): 
 # uncorrect_phone_numbers will be dropped, 
 # while others need to conform to consistency
-	phone_number = re.sub(r'\D', "", phone)
+	phone_number = re.sub(r'\D', "", phone) 
+	# non-digit characters are removed to simplify clean process
 	m = phone_number_re.search(phone_number)
 	n = mobile_phone_number_re.search(phone_number)
 	if m:
@@ -72,11 +73,11 @@ def clean_phone_number(phone):
 	else:
 		cleaned_phone_number = None
 	if cleaned_phone_number:
-		if len(cleaned_phone_number) < 11 or len(cleaned_phone_number) > 12:
-			print phone, '=>', cleaned_phone_number, '=> wrong number'
+		print phone, '=>', cleaned_phone_number
 	else:
 		print phone, '=> omitted'
 	return cleaned_phone_number 
+
 
 if __name__ == '__main__':
 	# clean()

@@ -11,7 +11,7 @@ try:
 except IndexError:
 	OSM_FILE = 'sample_divide_by10.osm'
 
-mapping = {
+postcode_mapping = {
 	'10060': '100600',
 	'10040': '100040',
 	'10080': '100080',
@@ -43,7 +43,7 @@ def clean():
 	uncorrect_postcodes = audit(OSM_FILE)
 	print uncorrect_postcodes
 	for postcode, count in uncorrect_postcodes.items():
-		correct_postcode = update_postcode(postcode, mapping)
+		correct_postcode = update_postcode(postcode, postcode_mapping)
 		if correct_postcode:
 			print postcode, '=>', correct_postcode
 		else:
@@ -52,16 +52,22 @@ def clean():
 def is_postcode(tag):
 	return (tag.attrib['k'] == 'addr:postcode')
 
-def audit_postcode(uncorrect_postcodes, postcode_value):
+def is_correct_postcode(postcode_value):
 	if len(postcode_value) == 6:
 		if postcode_value.startswith('10'):
 			return True
+	return False
+
+
+def audit_postcode(uncorrect_postcodes, postcode_value):
+	if is_correct_postcode(postcode_value):
+		return True
 	uncorrect_postcodes[postcode_value] += 1
 	return False
 
-def update_postcode(postcode, mapping):
-	if postcode in mapping:
-		modified_postcode = mapping[postcode]
+def update_postcode(postcode, postcode_mapping):
+	if postcode in postcode_mapping:
+		modified_postcode = postcode_mapping[postcode]
 		return modified_postcode
 	else:
 		return None 
