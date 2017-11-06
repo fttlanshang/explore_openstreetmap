@@ -1,2 +1,4 @@
 beijing_china.osm
 .ipynb_checkpoints/
+*.csv
+beijing_china.*

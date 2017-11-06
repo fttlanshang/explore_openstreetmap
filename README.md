@@ -1,0 +1,13 @@
+## OpenSreetMap Case Study Files Summary
+- report.pdf: pdf version of documentation, including data wrangling and exploration process.
+- report.html: html version of documentation
+- report.ipynb: jupyter notebook version of documentation
+- get_snippets.py: for getting a sample osm file
+- create_db_schema.sql: sql for creating tables
+- schema.py: shema needed for validation
+- audit_postcode.py: audit and clean function for postcode
+- audit_phone_number.py: clean function for phone number
+- transform_to_csv.py: do data cleaning and transform the data from osm file to csv files
+- map_area.md: documentation of the map choosed
+- sample_divide_by10.osm: a sample osm file
+- references.md: the websites that I referred to during my case study

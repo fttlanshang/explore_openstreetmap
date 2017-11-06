@@ -59,7 +59,6 @@ def generate_records_for_phone(tag, element_id):
             records.append(record)  
     return records
 
-# def generate_single_record_for_phone(records, phone, tag, element_id):
 
 def shape_element(element, node_attr_fields=NODE_FIELDS, way_attr_fields=WAY_FIELDS,
                   problem_chars=PROBLEMCHARS, default_tag_type='regular'):

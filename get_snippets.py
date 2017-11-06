@@ -4,7 +4,7 @@
 import xml.etree.ElementTree as ET  # Use cElementTree or lxml if too slow
 
 k = 10 # Parameter: take every k-th top level element
-OSM_FILE = "beijing_china.osm"  # Replace this with your osm file
+OSM_FILE = "beijing_china.osm" 
 SAMPLE_FILE = "sample_divide_by%s.osm" %k
 
 def get_element(osm_file, tags=('node', 'way', 'relation')):
@@ -27,10 +27,3 @@ with open(SAMPLE_FILE, 'wb') as output:
         if i % k == 0:
             output.write(ET.tostring(element, encoding='utf-8'))
     output.write('</osm>')
-
-def main():
-    get_element(OSM_FILE)
-
-
-if __name__ == '__main__':
-    main()

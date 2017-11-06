@@ -10,21 +10,21 @@ try:
 except IndexError:
 	OSM_FILE = 'sample_divide_by10.osm'
 
-# international_phone_number_re = re.compile(r'(^((\+|\(?00\)?)?86(\s*-?\s*)?((\(?0\)?)?10(\s*-?\s*)?)?)|(\(?8610\)?\s*)[0-9]{4}\s*[0-9]{4}$)', re.IGNORECASE)
-# national_phone_number_re = re.compile(r'(^(010)?\s*-?\s*[0-9]{4}\s*[0-9]{4}$)', re.IGNORECASE)
-# mobile_phone_number_re = re.compile(r'(^((\+?86\s*-?\s*)?)|(\(?8610\)?)1[0-9]{10}$)', re.IGNORECASE)
 
 phone_number_re = re.compile(r'^((00)?86)?(0?10)?(\d{8})$', re.IGNORECASE)
 mobile_phone_number_re = re.compile(r'^((00)?86(10)?)?(1\d{10})$', re.IGNORECASE)
 
-def audit(osmfile):
+# Since every phone number needs to be cleaned
+# to conform to the same rule.
+# First decide whether it is an array,
+# then call clean_phone_number function to clean each phone number.
+def clean(osmfile):
 	osm_file = open(osmfile, 'r')
 	unnormal_phone_numbers = set()
 	for event, element in ET.iterparse(osm_file):
 		if element.tag == 'node' or element.tag == 'way':
 			for tag in element.iter('tag'):
 				if is_phone_number(tag):
-					# print tag.attrib['v']
 					phone = tag.attrib['v']
 					if is_array(phone):
 						phones = re.split(r';|；|/', phone)
@@ -48,11 +48,10 @@ def is_array(phone):
 	else:
 		return False
 
+# this function is for searching for the incorrect phone numbers
 def audit_phone_number(unnormal_phone_numbers, phone):
-	# '(?P<value>\d+)'
 	phone_number = re.sub(r'\D', "", phone)
 	m = phone_number_re.search(phone_number)
-	# m2 = national_phone_number_re.search(phone_number)
 	n = mobile_phone_number_re.search(phone_number)
 	if (not m) and (not n):
 		unnormal_phone_numbers.add(phone_number)
@@ -80,5 +79,4 @@ def clean_phone_number(phone):
 
 
 if __name__ == '__main__':
-	# clean()
-	audit(OSM_FILE)
+	clean(OSM_FILE)

@@ -17,7 +17,6 @@ create table nodes_tags(
 	FOREIGN KEY(id) references nodes(id) 
 );
 
--- id,user,uid,version,changeset,timestamp
 create table ways (
 	id INTEGER PRIMARY KEY NOT NULL,
 	user TEXT,
